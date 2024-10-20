@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Toplevel
 from tkinter import messagebox as MessageBox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
@@ -15,6 +15,56 @@ def crearVentana():
 
 crearVentana()
 
+def ():
+    componenteX1 = 0
+    componenteY1 = 0
+    componenteX2 = 0
+    componenteY2 = 0
+
+    modalventana = tk.Tk()
+    modalventana.title('Producto Punto')
+    modalventana.geometry('500x350+800+200')
+
+    vector1 = tk.Label(modalventana, text='Ingrese el Id del Vector 1:')
+    vector2 = tk.Label(modalventana, text='Ingrese el Id del Vector 2:')
+
+    vector1.place(x=50, y=50),
+    vector2.place(x=50, y=80)
+
+    idVector1 = tk.Entry(modalventana, validate='key', bg='light grey', bd=0)
+    idVector2 = tk.Entry(modalventana, validate='key', bg='light grey', bd=0)
+
+    idVector1.place(x=200, y=50, width=100, height=20)
+    idVector2.place(x=200, y=80, width=100, height=20)
+
+    vector1 = int(idVector1.get())
+    vector2 = int(idVector1.get())
+
+    for vector in vectores:
+        if vector1 == vector['id']:
+            componenteX1 = vector['componenteX']
+            componenteY1 = vector['componenteY']
+
+    for vector in vectores:
+        if vector2 == vector['id']:
+            componenteX2 = vector['componenteX']
+            componenteY2 = vector['componenteY']
+        
+    productoPunto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
+
+    botonProductoPunto = tk.BuWtton(
+        modalventana,
+        text='Producto Punto',
+        bg='blue',
+        fg='white',
+        command= lambda: MessageBox.showinfo('OK', f'el producto punto es: {productoPunto}')
+    )
+
+    botonProductoPunto.place(x=50, y=120)
+
+def producto_punto(): 
+
+
 def etiquetas():
     tituloVector = tk.Label(ventana, text='Añadir Vector', font=('Helvetica', 16, 'bold'))
     componenteXVector1 = tk.Label(ventana, text='Componente X del vector:')
@@ -29,7 +79,7 @@ def etiquetas():
     componenteYVector1.place(x=300, y=50)
 
 def entradas():
-    global componenteIVector1, componenteJVector1
+    global componenteIVector1, componenteJVector1, idVector1, idVector2
 
     componenteIVector1 = tk.Entry(ventana, validate='key', bg='light grey', bd=0)
     componenteJVector1 = tk.Entry(ventana, validate='key', bg='light grey', bd=0)
@@ -45,8 +95,8 @@ def angulo(x, y):
 
 def agregarVector():
     try:
-        x = int(componenteIVector1.get())
-        y = int(componenteJVector1.get())
+        x = float(componenteIVector1.get())
+        y = float(componenteJVector1.get())
         vector_id = len(vectores) + 1
         vector_magnitud = magnitud(x, y)
         vector_angulo = round(angulo(x, y), 2)
@@ -158,7 +208,7 @@ def botones():
         text='Producto Punto',
         bg='green',
         fg='white',
-        command=eliminarVectores
+        command=productoPunto
     )
     botonProductoCruz = tk.Button(
         ventana,
@@ -169,7 +219,7 @@ def botones():
     )
     botonAnguloEntreVectores = tk.Button(
         ventana,
-        text='Angulo X Vectores',
+        text='Angulo Entre Vectores',
         bg='pink',
         fg='white',
         command=eliminarVectores
@@ -200,4 +250,3 @@ def cerrarVentana():
 
 ventana.protocol("WM_DELETE_WINDOW", cerrarVentana)
 ventana.mainloop()
-
