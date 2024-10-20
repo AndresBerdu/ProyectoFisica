@@ -15,11 +15,8 @@ def crearVentana():
 
 crearVentana()
 
-def ():
-    componenteX1 = 0
-    componenteY1 = 0
-    componenteX2 = 0
-    componenteY2 = 0
+def crearVentanaProductoPunto():
+    global  idVector1punto, idVector2punto
 
     modalventana = tk.Tk()
     modalventana.title('Producto Punto')
@@ -31,38 +28,147 @@ def ():
     vector1.place(x=50, y=50),
     vector2.place(x=50, y=80)
 
-    idVector1 = tk.Entry(modalventana, validate='key', bg='light grey', bd=0)
-    idVector2 = tk.Entry(modalventana, validate='key', bg='light grey', bd=0)
+    idVector1punto = tk.Entry(modalventana, validate='key', bg='light grey', bd=0)
+    idVector2punto = tk.Entry(modalventana, validate='key', bg='light grey', bd=0)
 
-    idVector1.place(x=200, y=50, width=100, height=20)
-    idVector2.place(x=200, y=80, width=100, height=20)
+    idVector1punto.place(x=200, y=50, width=100, height=20)
+    idVector2punto.place(x=200, y=80, width=100, height=20)
 
-    vector1 = int(idVector1.get())
-    vector2 = int(idVector1.get())
-
-    for vector in vectores:
-        if vector1 == vector['id']:
-            componenteX1 = vector['componenteX']
-            componenteY1 = vector['componenteY']
-
-    for vector in vectores:
-        if vector2 == vector['id']:
-            componenteX2 = vector['componenteX']
-            componenteY2 = vector['componenteY']
-        
-    productoPunto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
-
-    botonProductoPunto = tk.BuWtton(
+    botonProductoPunto = tk.Button(
         modalventana,
         text='Producto Punto',
         bg='blue',
         fg='white',
-        command= lambda: MessageBox.showinfo('OK', f'el producto punto es: {productoPunto}')
+        command=productoPunto
     )
 
     botonProductoPunto.place(x=50, y=120)
 
-def producto_punto(): 
+def productoPunto():
+    try:
+        vector1 = int(idVector1punto.get())
+        vector2 = int(idVector2punto.get())
+        
+        for vector_1 in vectores:
+            if vector1 == vector_1['id']:
+                componenteX1 = vector_1['componenteX']
+                componenteY1 = vector_1['componenteY']
+
+        for vector_2 in vectores:
+            if vector2 == vector_2['id']:
+                componenteX2 = vector_2['componenteX']
+                componenteY2 = vector_2['componenteY']
+        
+        punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
+        MessageBox.showinfo('OK', f'el producto punto es: {punto}')
+        return punto
+    except ValueError:
+        MessageBox.showinfo('ERROR', 'Hubo algún error')
+   
+def crearVentanaProductoCruz():
+    global  idVector1cruz, idVector2cruz
+
+    modalventanaCruz = tk.Tk()
+    modalventanaCruz.title('Producto Cruz')
+    modalventanaCruz.geometry('500x350+800+200')
+
+    vector1 = tk.Label(modalventanaCruz, text='Ingrese el Id del Vector 1:')
+    vector2 = tk.Label(modalventanaCruz, text='Ingrese el Id del Vector 2:')
+
+    vector1.place(x=50, y=50),
+    vector2.place(x=50, y=80)
+
+    idVector1cruz = tk.Entry(modalventanaCruz, validate='key', bg='light grey', bd=0)
+    idVector2cruz = tk.Entry(modalventanaCruz, validate='key', bg='light grey', bd=0)
+
+    idVector1cruz.place(x=200, y=50, width=100, height=20)
+    idVector2cruz.place(x=200, y=80, width=100, height=20)
+
+    botonProductoCruz = tk.Button(
+        modalventanaCruz,
+        text='Producto Cruz',
+        bg='blue',
+        fg='white',
+        command=productoCruz
+    )
+
+    botonProductoCruz.place(x=50, y=120)
+
+def productoCruz():
+    try:
+        vector1 = int(idVector1cruz.get())
+        vector2 = int(idVector2cruz.get())
+        
+        for vector_1 in vectores:
+            if vector1 == vector_1['id']:
+                componenteX1 = vector_1['componenteX']
+                componenteY1 = vector_1['componenteY']
+
+        for vector_2 in vectores:
+            if vector2 == vector_2['id']:
+                componenteX2 = vector_2['componenteX']
+                componenteY2 = vector_2['componenteY']
+        
+        productoCruz = (componenteX1 * componenteY2) + (componenteX2 * componenteY1)
+        MessageBox.showinfo('OK', f'el producto cruz es: {productoCruz}')
+    except ValueError:
+        MessageBox.showinfo('ERROR', 'Hubo algún error')
+
+
+def crearVentanaAnguloVectores():
+    global  idVector1angulo, idVector2angulo
+
+    modalventanaAngulo = tk.Tk()
+    modalventanaAngulo.title('Angulo Entre Vectores')
+    modalventanaAngulo.geometry('500x350+800+200')
+
+    vector1 = tk.Label(modalventanaAngulo, text='Ingrese el Id del Vector 1:')
+    vector2 = tk.Label(modalventanaAngulo, text='Ingrese el Id del Vector 2:')
+
+    vector1.place(x=50, y=50),
+    vector2.place(x=50, y=80)
+
+    idVector1angulo = tk.Entry(modalventanaAngulo, validate='key', bg='light grey', bd=0)
+    idVector2angulo = tk.Entry(modalventanaAngulo, validate='key', bg='light grey', bd=0)
+
+    idVector1angulo.place(x=200, y=50, width=100, height=20)
+    idVector2angulo.place(x=200, y=80, width=100, height=20)
+
+    botonProductoCruz = tk.Button(
+        modalventanaAngulo,
+        text='Angulo Entre Vectores',
+        bg='blue',
+        fg='white',
+        command=AnguloVectores
+    )
+
+    botonProductoCruz.place(x=50, y=120)
+
+def AnguloVectores():
+    try:
+        vector1 = int(idVector1angulo.get())
+        vector2 = int(idVector2angulo.get())
+        
+        for vector_1 in vectores:
+            if vector1 == vector_1['id']:
+                componenteX1 = vector_1['componenteX']
+                componenteY1 = vector_1['componenteY']
+                magnitud1 = vector_1['magnitud']
+
+        for vector_2 in vectores:
+            if vector2 == vector_2['id']:
+                componenteX2 = vector_2['componenteX']
+                componenteY2 = vector_2['componenteY']
+                magnitud2 = vector_2['magnitud']
+        
+        punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
+        magnitudes = magnitud1 * magnitud2
+        division = punto / magnitudes
+        angulo = math.cos(division)
+        
+        MessageBox.showinfo('OK', f'el angulo entre los vectores es: {angulo}')
+    except ValueError:
+        MessageBox.showinfo('ERROR', 'Hubo algún error')
 
 
 def etiquetas():
@@ -88,7 +194,7 @@ def entradas():
     componenteJVector1.place(x=300, y=80, width=200, height=30)
 
 def magnitud(x, y):
-    return math.sqrt(x**2 + y**2)
+    return round(math.sqrt(x**2 + y**2), 2)
 
 def angulo(x, y):
     return math.degrees(math.atan2(y, x))
@@ -208,21 +314,21 @@ def botones():
         text='Producto Punto',
         bg='green',
         fg='white',
-        command=productoPunto
+        command=crearVentanaProductoPunto
     )
     botonProductoCruz = tk.Button(
         ventana,
         text='Producto Cruz',
         bg='blue',
         fg='white',
-        command=eliminarVectores
+        command=crearVentanaProductoCruz
     )
     botonAnguloEntreVectores = tk.Button(
         ventana,
         text='Angulo Entre Vectores',
         bg='pink',
         fg='white',
-        command=eliminarVectores
+        command=crearVentanaAnguloVectores
     )
 
     botonAnadir.place(x=600, y=80)
