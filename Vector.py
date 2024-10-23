@@ -55,20 +55,28 @@ def productoPunto():
         try:
             vector1 = int(idVector1punto.get())
             vector2 = int(idVector2punto.get())
+            vector1Encontrado = False
+            vector2Encontrado = False
 
             for vector_1 in vectores:
                 if vector1 == vector_1['id']:
                     componenteX1 = vector_1['componenteX']
                     componenteY1 = vector_1['componenteY']
+                    vector1Encontrado = True
 
             for vector_2 in vectores:
                 if vector2 == vector_2['id']:
                     componenteX2 = vector_2['componenteX']
                     componenteY2 = vector_2['componenteY']
+                    vector2Encontrado = True
 
-            punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
-            MessageBox.showinfo('OK', f'el producto punto es: {punto}')
-            modalventana.destroy()
+            if not vector1Encontrado or not vector2Encontrado:
+                MessageBox.showinfo('Error', 'Uno o ambos vectores no se encontraron')
+                modalventana.destroy()
+            else:
+                punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
+                MessageBox.showinfo('OK', f'el producto punto es: {punto}')
+                modalventana.destroy()
         except ValueError:
             MessageBox.showinfo('ERROR', 'Hubo algún error')
    
@@ -112,20 +120,28 @@ def productoCruz():
         try:
             vector1 = int(idVector1cruz.get())
             vector2 = int(idVector2cruz.get())
+            vector1Encontrado = False
+            vector2Encontrado = False
 
             for vector_1 in vectores:
                 if vector1 == vector_1['id']:
                     componenteX1 = vector_1['componenteX']
                     componenteY1 = vector_1['componenteY']
+                    vector1Encontrado = True
 
             for vector_2 in vectores:
                 if vector2 == vector_2['id']:
                     componenteX2 = vector_2['componenteX']
                     componenteY2 = vector_2['componenteY']
+                    vector2Encontrado = True
 
-            productoCruz = (componenteX1 * componenteY2) + (componenteX2 * componenteY1)
-            MessageBox.showinfo('OK', f'el producto cruz es: {productoCruz}')
-            modalventanaCruz.destroy()
+            if not vector1Encontrado or not vector2Encontrado:
+                MessageBox.showinfo('Error', 'Uno o ambos vectores no se encontraron')
+                modalventanaCruz.destroy()
+            else:
+                productoCruz = (componenteX1 * componenteY2) + (componenteX2 * componenteY1)
+                MessageBox.showinfo('OK', f'el producto cruz es: {productoCruz}')
+                modalventanaCruz.destroy()
         except ValueError:
             MessageBox.showinfo('ERROR', 'Hubo algún error')
 
@@ -170,29 +186,38 @@ def AnguloVectores():
         try:
             vector1 = int(idVector1angulo.get())
             vector2 = int(idVector2angulo.get())
+            vector1Encontrado = False
+            vector2Encontrado = False
 
             for vector_1 in vectores:
                 if vector1 == vector_1['id']:
                     componenteX1 = vector_1['componenteX']
                     componenteY1 = vector_1['componenteY']
                     magnitud1 = vector_1['magnitud']
+                    vector1Encontrado = True
 
             for vector_2 in vectores:
                 if vector2 == vector_2['id']:
                     componenteX2 = vector_2['componenteX']
                     componenteY2 = vector_2['componenteY']
                     magnitud2 = vector_2['magnitud']
+                    vector2Encontrado = True
+            
+            if not vector1Encontrado or not vector2Encontrado:
+                MessageBox.showinfo('Error', 'Uno o ambos vectores no se encontraron')
+                modalventanaAngulo.destroy()
+            else:
+                punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
+                magnitudes = magnitud1 * magnitud2
+                division = round(punto / magnitudes, 2)
 
-            punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
-            magnitudes = magnitud1 * magnitud2
-            division = round(punto / magnitudes, 2)
-
-            if division == 1:
-                MessageBox.showinfo('OK', f'el angulo entre los vectores es: 0°')
-            else: 
-                angulo = round((math.acos(division) * 180/math.pi), 2)
-                MessageBox.showinfo('OK', f'el angulo entre los vectores es: {angulo}°')
-            modalventanaAngulo.destroy()
+                if division == 1:
+                    MessageBox.showinfo('OK', f'el angulo entre los vectores es: 0°')
+                    modalventanaAngulo.destroy()
+                else: 
+                    angulo = round((math.acos(division) * 180/math.pi), 2)
+                    MessageBox.showinfo('OK', f'el angulo entre los vectores es: {angulo}°')
+                modalventanaAngulo.destroy()
         except ValueError:
             MessageBox.showinfo('ERROR', 'Hubo algún error')
 
@@ -223,7 +248,11 @@ def magnitud(x, y):
     return round(math.sqrt(x**2 + y**2), 2)
 
 def angulo(x, y):
-    return math.degrees(math.atan2(y, x))
+    angulo = math.degrees(math.atan2(y, x))
+    if angulo >= 0:
+        return angulo
+    else:
+        return angulo + 360
 
 def agregarVector():
     try:
@@ -283,7 +312,6 @@ def eliminarVector():
     else:
         for vector_1 in vectores:
             vector1 = int(idVector1Elimnar.get())
-
             if vector1 == vector_1['id']:
                 vectores.remove(vector_1)
                 MessageBox.showinfo('OK', 'Vectore Eliminado')
