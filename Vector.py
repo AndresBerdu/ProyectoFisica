@@ -45,8 +45,11 @@ def crearVentanaProductoPunto():
     botonProductoPunto.place(x=50, y=100)
 
 def productoPunto():
-    if len(vectores) == 0 or 1:
+    if len(vectores) <= 1:
         MessageBox.showinfo('Error', 'No hay ningún vector creado o solo hay un vector :(')
+        modalventana.destroy()
+    elif idVector1punto.get() == idVector2punto.get():
+        MessageBox.showinfo('Error', 'No puedes poner el mismo vector :(')
         modalventana.destroy()
     else:
         try:
@@ -64,7 +67,7 @@ def productoPunto():
                     componenteY2 = vector_2['componenteY']
 
             punto = (componenteX1 * componenteX2) + (componenteY1 * componenteY2)
-            MessageBox.showinfo('OK', f'el producto punto es: {punto} unidades')
+            MessageBox.showinfo('OK', f'el producto punto es: {punto}')
             modalventana.destroy()
         except ValueError:
             MessageBox.showinfo('ERROR', 'Hubo algún error')
@@ -99,8 +102,11 @@ def crearVentanaProductoCruz():
     botonProductoCruz.place(x=50, y=100)
 
 def productoCruz():
-    if len(vectores) == 0 or 1:
+    if len(vectores) <= 1:
         MessageBox.showinfo('Error', 'No hay ningún vector creado o solo hay un vector :(')
+        modalventanaCruz.destroy()
+    elif idVector1cruz.get() == idVector2cruz.get():
+        MessageBox.showinfo('Error', 'No puedes poner el mismo vector :(')
         modalventanaCruz.destroy()
     else:
         try:
@@ -154,9 +160,12 @@ def crearVentanaAnguloVectores():
     botonProductoCruz.place(x=50, y=100)
 
 def AnguloVectores():
-    if len(vectores) == 0 or 1:
+    if len(vectores) <= 1:
         MessageBox.showinfo('Error', 'No hay ningún vector creado o solo hay un vector :(')
-        modalventanaAngulo.destroy()
+        modalventanaCruz.destroy()
+    elif idVector1angulo.get() == idVector2angulo.get():
+        MessageBox.showinfo('Error', 'No puedes medir el angulo del mismo vector :(')
+        modalventanaCruz.destroy()
     else:
         try:
             vector1 = int(idVector1angulo.get())
@@ -218,7 +227,7 @@ def angulo(x, y):
 
 def agregarVector():
     try:
-        if componenteIVector1.get() and componenteJVector1.get() == '0':
+        if componenteIVector1.get() == '0' and componenteJVector1.get() == '0':
             MessageBox.showinfo('ERROR', f'no puedes agregar un vector con componentes 0')
             componenteIVector1.delete(0, tk.END)
             componenteJVector1.delete(0, tk.END)
