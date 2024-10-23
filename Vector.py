@@ -333,6 +333,139 @@ def eliminarVectores():
         MessageBox.showinfo('OK', 'Vectores Eliminados')
 
 
+def crearVentanaSumarVectores():
+    global  idVector1suma, idVector2suma, modalventanaSuma
+
+    modalventanaSuma = tk.Tk()
+    modalventanaSuma.title('Sumar Vectores')
+    modalventanaSuma.geometry('350x155+800+200')
+
+    vector1 = tk.Label(modalventanaSuma, text='Ingrese el Id del Vector 1:')
+    vector2 = tk.Label(modalventanaSuma, text='Ingrese el Id del Vector 2:')
+
+    vector1.place(x=50, y=20),
+    vector2.place(x=50, y=60)
+
+    idVector1suma = tk.Entry(modalventanaSuma, validate='key', bg='light grey', bd=0)
+    idVector2suma = tk.Entry(modalventanaSuma, validate='key', bg='light grey', bd=0)
+
+    idVector1suma.place(x=200, y=20, width=100, height=20)
+    idVector2suma.place(x=200, y=60, width=100, height=20)
+
+    botonProductoPunto = tk.Button(
+        modalventanaSuma,
+        text='Sumar Vectores',
+        bg='blue',
+        fg='white',
+        command=sumarVectores
+    )
+
+    botonProductoPunto.place(x=50, y=100)
+
+def sumarVectores():
+    if len(vectores) <= 1:
+        MessageBox.showinfo('Error', 'No hay ningún vector creado o solo hay un vector :(')
+        modalventanaSuma.destroy()
+    elif idVector1suma.get() == idVector2suma.get():
+        MessageBox.showinfo('Error', 'No puedes poner el mismo vector :(')
+        modalventanaSuma.destroy()
+    else:
+        try:
+            vector1 = int(idVector1suma.get())
+            vector2 = int(idVector2suma.get())
+            vector1Encontrado = False
+            vector2Encontrado = False
+
+            for vector_1 in vectores:
+                if vector1 == vector_1['id']:
+                    componenteX1 = vector_1['componenteX']
+                    componenteY1 = vector_1['componenteY']
+                    vector1Encontrado = True
+
+            for vector_2 in vectores:
+                if vector2 == vector_2['id']:
+                    componenteX2 = vector_2['componenteX']
+                    componenteY2 = vector_2['componenteY']
+                    vector2Encontrado = True
+
+            if not vector1Encontrado or not vector2Encontrado:
+                MessageBox.showinfo('Error', 'Uno o ambos vectores no se encontraron')
+                modalventanaSuma.destroy()
+            else:
+                sumaX = (componenteX1 + componenteX2) 
+                sumaY = (componenteY1 + componenteY2)
+                MessageBox.showinfo('OK', f'La suma de los vectores V1:{vector1} y V2:{vector2} es: (X:{sumaX}, Y:{sumaY})')
+                modalventanaSuma.destroy()
+        except ValueError:
+            MessageBox.showinfo('ERROR', 'Hubo algún error')
+
+
+def crearVentanaRestarVectores():
+    global  idVector1resta, idVector2resta, modalventanaResta
+
+    modalventanaResta = tk.Tk()
+    modalventanaResta.title('Restar Vectores')
+    modalventanaResta.geometry('350x155+800+200')
+
+    vector1 = tk.Label(modalventanaResta, text='Ingrese el Id del Vector 1:')
+    vector2 = tk.Label(modalventanaResta, text='Ingrese el Id del Vector 2:')
+
+    vector1.place(x=50, y=20),
+    vector2.place(x=50, y=60)
+
+    idVector1resta = tk.Entry(modalventanaResta, validate='key', bg='light grey', bd=0)
+    idVector2resta = tk.Entry(modalventanaResta, validate='key', bg='light grey', bd=0)
+
+    idVector1resta.place(x=200, y=20, width=100, height=20)
+    idVector2resta.place(x=200, y=60, width=100, height=20)
+
+    botonProductoPunto = tk.Button(
+        modalventanaResta,
+        text='Restar Vectores',
+        bg='blue',
+        fg='white',
+        command=restarVectores
+    )
+
+    botonProductoPunto.place(x=50, y=100)
+
+def restarVectores():
+    if len(vectores) <= 1:
+        MessageBox.showinfo('Error', 'No hay ningún vector creado o solo hay un vector :(')
+        modalventanaResta.destroy()
+    elif idVector1resta.get() == idVector2resta.get():
+        MessageBox.showinfo('Error', 'No puedes poner el mismo vector :(')
+        modalventanaResta.destroy()
+    else:
+        try:
+            vector1 = int(idVector1resta.get())
+            vector2 = int(idVector2resta.get())
+            vector1Encontrado = False
+            vector2Encontrado = False
+
+            for vector_1 in vectores:
+                if vector1 == vector_1['id']:
+                    componenteX1 = vector_1['componenteX']
+                    componenteY1 = vector_1['componenteY']
+                    vector1Encontrado = True
+
+            for vector_2 in vectores:
+                if vector2 == vector_2['id']:
+                    componenteX2 = vector_2['componenteX']
+                    componenteY2 = vector_2['componenteY']
+                    vector2Encontrado = True
+
+            if not vector1Encontrado or not vector2Encontrado:
+                MessageBox.showinfo('Error', 'Uno o ambos vectores no se encontraron')
+                modalventanaResta.destroy()
+            else:
+                sumaX = (componenteX1 - componenteX2) 
+                sumaY = (componenteY1 - componenteY2)
+                MessageBox.showinfo('OK', f'La resta de los vectores V1:{vector1} y V2:{vector2} es: (X:{sumaX}, Y:{sumaY})')
+                modalventanaResta.destroy()
+        except ValueError:
+            MessageBox.showinfo('ERROR', 'Hubo algún error')
+
 def actualizarGrafico():
     global ax, canvas, fig
 
@@ -413,6 +546,20 @@ def botones():
         text='Eliminar Vector', 
         command=crearVentanaEliminarVector
     )
+    botonSumarVector = tk.Button(
+        ventana, 
+        bg='#029df0',
+        fg='white',
+        text='Sumar Vector', 
+        command=crearVentanaSumarVectores
+    )
+    botonRestarVector = tk.Button(
+        ventana, 
+        bg='green',
+        fg='white',
+        text='Restar Vector', 
+        command=crearVentanaRestarVectores
+    )
     botonEliminarVectores = tk.Button(
         ventana,
         text='Eliminar Vectores',
@@ -443,6 +590,8 @@ def botones():
     )
 
     botonAnadir.place(x=600, y=80)
+    botonSumarVector.place(x=200, y=140)
+    botonRestarVector.place(x=300, y=140)
     botonEliminarVector.place(x=600, y=120)
     botonEliminarVectores.place(x=760, y=25)
     botonProductoPuntoVectores.place(x=880, y=25)
